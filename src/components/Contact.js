@@ -1,6 +1,10 @@
 import React from 'react';
 import ContactInfo from './ContactInfo';
 import ContactDetails from './ContactDetails';
+import ContactCreate from './ContactCreate';
+
+//update 사용을 위함 (immutablility helper)
+import update from 'immutability-helper';
 
 export default class Contact extends React.Component{
 
@@ -34,6 +38,10 @@ export default class Contact extends React.Component{
         //binding을 해줘야 직접 정의한 함수가 동작함
         this.handleChange=this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        //전화번호 생성, 수정, 삭제 기능의 함수 바인딩 
+        this.handleCreate = this.handleCreate.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
 
@@ -50,6 +58,41 @@ export default class Contact extends React.Component{
         });
         console.log(key,'is selected');//key 값 확인 용도
     }
+
+    //전화번호 추가 함수 
+    handleCreate (contact){
+        this.setState({
+            contactData : update (this.state.contactData, {$push :[contact]})
+
+        });
+    }
+
+    //전화번호 삭제 함수 
+    handleRemove () {
+        if(this.state.selectedKey<0)//선택된 것이 없는 경우 삭제 하지 않도록 설정
+            return;
+            
+        this.setState({
+            contactData : update(this.state.contactData,
+                {$splice : [[this.state.selectedKey,1]]}//selectedKey번호 부터 한개만 삭제
+            ),
+            selectedKey: -1
+        });
+    }
+    //전화번호 수정 함수 
+    handleEdit(name, phone){
+        this.setState({
+            contactData : update (this.state.contactData,
+                {
+                    [this.state.selectedKey] : {
+                        name : {$set: name},
+                        phone : {$set: phone}
+                    }
+                }
+            )
+        });
+    }
+
 
     render(){
         const mapToComponents = (data)=> {
@@ -86,7 +129,12 @@ export default class Contact extends React.Component{
                 <ContactDetails 
                     isSelected = {this.state.selectedKey !=-1 }
                     contact ={this.state.contactData[this.state.selectedKey]}
+                    onRemove ={this.handleRemove}
+                    onEdit ={this.handleEdit}
                 />
+                <ContactCreate 
+                    onCreate={this.handleCreate}
+                /> 
                
             </div>
         );
