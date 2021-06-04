@@ -13,7 +13,7 @@ module.exports = {
     devServer: {
         hot: true,
         inline: true,
-        host: '0.0.0.0',
+        host: '127.0.0.1',
         port: 4000,
         contentBase: __dirname + '/public/' //index 파일의 위치
     },
@@ -22,7 +22,7 @@ module.exports = {
             loaders: [
                 {
                     test: /\.js$/,
-                    loader: 'babel',
+                    loader: 'babel-loader',
                     exclude: /node_modules/,
                     query: {
                         cacheDirectory: true,
