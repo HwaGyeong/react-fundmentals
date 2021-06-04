@@ -22,7 +22,7 @@ module.exports = {
             loaders: [
                 {
                     test: /\.js$/,
-                    loader: 'babel-loader',
+                    loader: 'babel-loader',//loader 부분 생략시 오류 발생 
                     exclude: /node_modules/,
                     query: {
                         cacheDirectory: true,
