@@ -8,7 +8,7 @@ export default class ContactDetails extends React.Component{
                 <p>{this.props.contact.name} </p>
                 <p>{this.props.contact.phone} </p>
             </div>
-        );
+        );//기본 출력 값 
         const blank=(<div>Not Selected</div>);
 
 
