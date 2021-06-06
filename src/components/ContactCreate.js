@@ -9,6 +9,7 @@ export default class ContactCreate extends React.Component{
         };
         this.handleChange= this.handleChange.bind(this);
         this.handleClick =this.handleClick.bind(this);
+        this.handleKeyPress=this.handleKeyPress.bind(this);
     }
 
 
@@ -34,6 +35,16 @@ export default class ContactCreate extends React.Component{
             name: '',
             phone: ''
         });
+
+        //for ref
+        this.nameInput.focus();
+    }
+
+    //엔터 키 치면 버튼을 누르지 않고도 저장이 가능함
+    handleKeyPress(e) {
+        if(e.charCode===13) {//13번은 enter를 의미함
+            this.handleClick();
+        }
     }
 
     render(){
@@ -47,6 +58,7 @@ export default class ContactCreate extends React.Component{
                     placeholder="name"
                     value={this.state.name}
                     onChange={this.handleChange}
+                    ref={(ref)=>{this.nameInput=ref}}
                 />
             </p>  
             <p>  
@@ -56,6 +68,7 @@ export default class ContactCreate extends React.Component{
                     placeholder="phone"
                     value={this.state.phone}
                     onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
                 />
                 
             </p>
