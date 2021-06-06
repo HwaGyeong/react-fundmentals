@@ -15,7 +15,11 @@ export default class ContactDetails extends React.Component{
         this.handleToggle=this.handleToggle.bind(this);
         this.handleChange= this.handleChange.bind(this);
         this.handleEdit= this.handleEdit.bind(this);
+
+        //enter입력시 수정 바로 가능하게 함
+        this.handleKeyPress=this.handleKeyPress.bind(this);
     }
+
 
     handleToggle() {
         if(!this.state.isEdit) {//isEdit이 false이면 원래 값 보이기
@@ -44,6 +48,13 @@ export default class ContactDetails extends React.Component{
     //값 변경이 가능하게 하는 함수
     handleEdit() {
         this.props.onEdit(this.state.name, this.state.phone);
+    }
+
+    //엔터 키 치면 버튼을 누르지 않고도 저장이 가능함
+    handleKeyPress(e) {
+        if(e.charCode===13) {//13번은 enter를 의미함
+            this.handleToggle();
+        }
     }
 
 
@@ -76,6 +87,7 @@ export default class ContactDetails extends React.Component{
                         placeholder="phone"
                         value={this.state.phone}
                         onChange={this.handleChange}
+                        onKeyPress={this.handleKeyPress}
                     />
                 </p>
             </div>
